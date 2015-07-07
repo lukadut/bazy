@@ -1,0 +1,253 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MySql.Data;
+using MySql.Data.MySqlClient;
+
+namespace bazy_danych
+{
+    public class Base
+    {
+        private string Server { get; set; }
+        private string DataBase { get; set; }
+        private string UID { get; set; }
+        private string Password { get; set; }
+        public MySqlConnection MySqlConnector;
+        public List<Drivers> DriversList;
+        public List<Cars> CarsList;
+        public List<FreightsList> FreightsListList;
+
+
+        //MySqlCommand cmd;
+       // private MySqlCommand cmd1;
+
+
+        public Base()
+        {
+            ConnectToDataBase();
+            DriversList = new List<Drivers>();
+            LoadDrivers();
+            CarsList = new List<Cars>();
+            LoadCars();
+            FreightsListList = new List<FreightsList>();
+            LoadFreightsList();
+            
+        }
+
+        /// <summary>
+        /// Trzeba uzyc try catch
+        /// </summary>
+        public void ConnectToDataBase()
+        {
+            Server = "localhost";
+            DataBase = "projekt";
+            UID = "root";
+            Password = "";
+            string Connection = "SERVER=" + Server + ";" + "DATABASE=" + DataBase + ";" + "UID=" + UID + ";" + "PASSWORD=" + Password + ";";
+            MySqlConnector = new MySqlConnection(Connection);
+        }
+
+        /// <summary>
+        /// tez trzeba uzyc try catch
+        /// </summary>
+        public void LoadDrivers()
+        {
+            //string result = "";
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "SELECT * FROM drivers";
+            MySqlConnector.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                DriversList.Add(new Drivers(reader.GetUInt32("Id"), reader.GetString("Name"), reader.GetString("Surname"), reader.GetUInt32("Wage"), reader.GetBoolean("ADR_License"), reader.GetBoolean("Employed"), reader.GetBoolean("Busy"), reader.GetString("Comment")));
+                //result += "\n" + reader.GetString("Name") + "	" +reader.GetString("Surname") + "	" +reader.GetUInt32("Wage") + "	" +
+                //    reader.GetBoolean("ADR_License") + "	" +reader.GetBoolean("Employed") + "	" +reader.GetString("Comment");
+            }
+            MySqlConnector.Close();
+            //return result;
+
+        }
+        public void AddDriver(string name, string surname, uint wage, bool adr, bool employed, string comment)
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "INSERT INTO drivers(name,surname,wage,adr_license,employed,comment) VALUES (@Name,@Surname,@Wage,@Adr,@Employed,@Comment)";
+            //cmd.CommandText = "UPDATE drivers SET name=@Name, surname=@Surname, wage=@Wage, adr_license=@Adr, employed=@Employed, comment=@Comment WHERE id = @Id";
+            cmd.Parameters.AddWithValue("@Name", name);
+            cmd.Parameters.AddWithValue("@Surname", surname);
+            cmd.Parameters.AddWithValue("@Wage", wage);
+
+
+            if (adr)
+            {
+                cmd.Parameters.AddWithValue("@Adr", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Adr", "False");
+            }
+            if (employed)
+            {
+                cmd.Parameters.AddWithValue("@Employed", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Employed", "False");
+            }
+            cmd.Parameters.AddWithValue("@Comment", comment);
+            MySqlConnector.Open();
+            cmd.ExecuteNonQuery();
+            uint Id = (uint)cmd.LastInsertedId;
+            DriversList.Add(new Drivers(Id, name, surname, wage, adr, employed, false, comment));
+            MySqlConnector.Close();
+
+        }
+
+        public void UpdateDrivers(int IdList, int IdBase)
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "UPDATE drivers SET name=@Name, surname=@Surname, wage=@Wage, adr_license=@Adr, employed=@Employed, comment=@Comment WHERE id = @Id";
+            cmd.Parameters.AddWithValue("@Name", DriversList[IdList].Name);
+            cmd.Parameters.AddWithValue("@Surname", DriversList[IdList].Surname);
+            cmd.Parameters.AddWithValue("@Wage", DriversList[IdList].Wage);
+
+
+            if (DriversList[IdList].Adr)
+            {
+                cmd.Parameters.AddWithValue("@Adr", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Adr", "False");
+            }
+            if (DriversList[IdList].Employed)
+            {
+                cmd.Parameters.AddWithValue("@Employed", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Employed", "False");
+            }
+            cmd.Parameters.AddWithValue("@Comment", DriversList[IdList].Comment);
+            cmd.Parameters.AddWithValue("@Id", (IdBase));
+            MySqlConnector.Open();
+            cmd.ExecuteNonQuery();
+            MySqlConnector.Close();
+        }
+
+
+        public void LoadCars()
+        {
+            //string result = "";
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "SELECT * FROM cars";
+            MySqlConnector.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                CarsList.Add(new Cars(reader.GetUInt32("Id"), reader.GetString("Number_plate"), reader.GetString("Make"), reader.GetString("Model"), reader.GetUInt32("Carry"), reader.GetBoolean("IsUsed"), reader.GetBoolean("Sold"), reader.GetString("Comment")));
+                //result += "\n" + reader.GetString("Name") + "	" +reader.GetString("Surname") + "	" +reader.GetUInt32("Wage") + "	" +
+                //    reader.GetBoolean("ADR_License") + "	" +reader.GetBoolean("Employed") + "	" +reader.GetString("Comment");
+            }
+            MySqlConnector.Close();
+        }
+
+        public void AddCar(string numberPlate, string make, string model, uint carry, bool isUsed, bool sold, string comment)
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "INSERT INTO cars(Number_plate,make,model,carry,isused,sold,comment) VALUES (@Plate,@Make,@Model,@Carry,@IsUsed,@Sold,@Comment)";
+            //cmd.CommandText = "UPDATE drivers SET name=@Name, surname=@Surname, wage=@Wage, adr_license=@Adr, employed=@Employed, comment=@Comment WHERE id = @Id";
+            cmd.Parameters.AddWithValue("@Plate", numberPlate);
+            cmd.Parameters.AddWithValue("@Make", make);
+            cmd.Parameters.AddWithValue("@Model", model);
+            cmd.Parameters.AddWithValue("@Carry", carry);
+
+
+            if (isUsed)
+            {
+                cmd.Parameters.AddWithValue("@IsUsed", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@IsUsed", "False");
+            }
+            if (sold)
+            {
+                cmd.Parameters.AddWithValue("@Sold", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Sold", "False");
+            }
+            cmd.Parameters.AddWithValue("@Comment", comment);
+            try
+            {
+                MySqlConnector.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception exc)
+            {
+                System.Console.WriteLine(exc.Message);
+            }
+            uint Id = (uint)cmd.LastInsertedId;
+            CarsList.Add(new Cars(Id, numberPlate, make, model, carry, isUsed, sold, comment));
+            MySqlConnector.Close();
+
+        }
+
+        public void UpdateCars(int IdList, int IdBase)
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "UPDATE Cars SET Model=@Model, Make=@Make, Carry=@Carry, Number_plate=@Plate, Sold=@Sold, comment=@Comment WHERE id = @Id";
+            cmd.Parameters.AddWithValue("@Model", CarsList[IdList].Model);
+            cmd.Parameters.AddWithValue("@Make", CarsList[IdList].Make);
+            cmd.Parameters.AddWithValue("@Carry", CarsList[IdList].Carry);
+
+
+
+            cmd.Parameters.AddWithValue("@Plate", CarsList[IdList].Plate);
+
+
+            if (CarsList[IdList].Sold)
+            {
+                cmd.Parameters.AddWithValue("@Sold", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Sold", "False");
+            }
+            cmd.Parameters.AddWithValue("@Comment", CarsList[IdList].Comment);
+            cmd.Parameters.AddWithValue("@Id", (IdBase));
+            MySqlConnector.Open();
+            cmd.ExecuteNonQuery();
+            MySqlConnector.Close();
+        }
+
+
+        public void LoadFreightsList()
+        {
+            //string result = "";
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "SELECT * FROM freights_list";
+            MySqlConnector.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Console.Write(reader.GetFieldType(4));
+                Console.WriteLine(Functions.ExpADR(reader.GetString(4)));
+                //CarsList.Add(new Cars(reader.GetUInt32("Id"), reader.GetString("Number_plate"), reader.GetString("Make"), reader.GetString("Model"), reader.GetUInt32("Carry"), reader.GetBoolean("IsUsed"), reader.GetBoolean("Sold"), reader.GetString("Comment")));
+                //result += "\n" + reader.GetString("Name") + "	" +reader.GetString("Surname") + "	" +reader.GetUInt32("Wage") + "	" +
+                //    reader.GetBoolean("ADR_License") + "	" +reader.GetBoolean("Employed") + "	" +reader.GetString("Comment");
+            }
+            MySqlConnector.Close();
+        }
+    }
+}
