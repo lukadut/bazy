@@ -29,6 +29,16 @@ namespace bazy_danych
             return -1;
         }
 
+        public static int FindFreightsList(int IdInBase, List<FreightsList> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Id == IdInBase)
+                    return i;
+            }
+            return -1;
+        }
+
         public static bool AllowedPlate(string newPlate, List<Cars>list)
         {
             //newPlate.Skip(5);
@@ -76,6 +86,10 @@ namespace bazy_danych
                         dataGridView1.Rows[r].Cells[i].Value = "Nie";
                 }
             }
+        }
+        public static int FindStringIndex(string[] strings, string f)
+        {
+            return Array.FindIndex(strings, s => s.Equals(f));
         }
 
     }

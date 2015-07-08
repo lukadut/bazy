@@ -17,7 +17,10 @@ namespace bazy_danych
         string[] ColumnNames = { "Id", "Nazwa towaru", "Typ", "Wymagany ADR", "Klasa ADR", "Komentarz" };
         string[] TypesPL = { "Kontener", "Wywrotka", "Platforma", "Laweta", "Chłodnia", "Cysterna" };
         string[] Types = { "Container", "Dump", "Flatbed", "Lowboy", "Refrigerated", "Tank" };
-        //string[] ADRClass = {}
+        string[] ADRClass = { "Materiały wybuchowe", "Gazy", "Materiały ciekłe zapalne", "Materiały stałe zapalne", "Materiały samozapalne", 
+                                "Materiały wytwarzające \nw zetknięciu z wodą gazy palne", "Materiały utleniające", "Materiały organiczne", 
+                                "Materiały trujące", "Materiały zakaźne", "Materiały \npromieniotwórcze", "Materiały żrące", 
+                                "Różne materiały \ni przedmioty \nniebezpieczne" };
         Base DataBase;
         List<CheckBox> CheckBoxList;
         public FreightsListForm(Base dataBase, int? id = null)
@@ -28,17 +31,16 @@ namespace bazy_danych
             DrawADRCheckBoxes();
 
             LoadData(DataBase);
-            comboBox1.Items.Clear();
-            for (int i = 0; i < 6; i++)
-            {
-                comboBox1.Items.Add(Types[i]);
-            }
-                if (id >= 0 && Functions.FindCar((int)id, DataBase.CarsList) >= 0)
+
+            //Console.WriteLine("laweta ma numer " + Functions.FindStringIndex(TypesPL,"a"));
+            type.Items.Clear();
+            type.Items.AddRange(TypesPL);
+            type.Text = "Kontener";
+                if (id >= 0 && Functions.FindFreightsList((int)id, DataBase.FreightsListList) >= 0)
                 {
                     this.id.Text = id + "";
-                    ShowCar(Functions.FindCar((int)id, DataBase.CarsList));
+                    ShowFreightsList(Functions.FindFreightsList((int)id, DataBase.FreightsListList));
                 }
-            //MessageBox.Show("ustalony?");
         }
 
         void DrawADRCheckBoxes()
@@ -48,10 +50,13 @@ namespace bazy_danych
                 CheckBox cb = new CheckBox();
                 cb.AutoSize = true;
                 cb.Location = new System.Drawing.Point(260 + ((i + 1) / 8) * 60, 13 + 20 * ((i % 7)));
-                //cb.Name = "checkBox1";
+                cb.Enabled = false;
                 cb.Size = new System.Drawing.Size(58, 17);
                 cb.TabIndex = 19;
                 cb.Text = Functions.classes[i];
+                cb.Tag = i;
+                cb.MouseEnter += ((object sender, EventArgs e) => cb.Text = Functions.classes[(int)cb.Tag] + " " + ADRClass[(int)cb.Tag]);
+                cb.MouseLeave += ((object sender, EventArgs e) => cb.Text = Functions.classes[(int)cb.Tag]);
                 cb.UseVisualStyleBackColor = true;
                 CheckBoxList.Add(cb);
                 this.Controls.Add(cb);
@@ -74,10 +79,6 @@ namespace bazy_danych
                 for (int i = 0; i < dataGridView1.Columns.Count; i++)
                 {
                     dataGridView1.Columns[i].Width = dataGridView1.Width / dataGridView1.Columns.Count - 8;
-                    //for (int j = 0; j < dataGridView1.RowCount; j++)
-                    //{
-
-                    //}
                 }
                 dataGridView1.Columns[dataGridView1.Columns.Count - 1].Width+= 4;
 
@@ -104,13 +105,10 @@ namespace bazy_danych
         }
         void ClearForm()
         {
-            //model.Text = "";
-            //id.Text = "";
-            //comment.Text = "";
-            //plate.Text = "";
-            //carry.Value = 0;
-            ////isUsed.Checked = false;
-            //sold.Checked = false;
+            name.Text = "";
+            type.Text = "Kontener";
+            adr.Checked = false;
+            comment.Text = "";
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -121,64 +119,39 @@ namespace bazy_danych
         private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             id.Text = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-            int Id = Functions.FindCar(int.Parse(dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString()), DataBase.CarsList);
-            //int Id = -1 + int.Parse(dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString());
-            ShowCar(Id);
-            //name.Text = DataBase.CarsList[Id].Name;
-            //surname.Text = DataBase.CarsList[Id].Surname;
-            //comment.Text = DataBase.CarsList[Id].Comment;
-            //wage.Value = DataBase.CarsList[Id].Wage;
-            //employed.Checked = DataBase.CarsList[Id].Employed;
-            //adr.Checked = DataBase.CarsList[Id].Adr;
-            //if (DataBase.CarsList[Id].Busy) 
-            //{
-            //    this.employed.Hide();
-            //}
-            //else
-            //{
-            //    this.employed.Show();
-            //}
+            int Id = Functions.FindFreightsList(int.Parse(dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString()), DataBase.FreightsListList);
+            ShowFreightsList(Id);
+
+
         }
-        private void ShowCar(int Id)
+        private void ShowFreightsList(int Id)
         {
-            ////make.Text = DataBase.CarsList[Id].Make;
-            //model.Text = DataBase.CarsList[Id].Model;
-            //comment.Text = DataBase.CarsList[Id].Comment;
-            //plate.Text = DataBase.CarsList[Id].Plate;
-            //carry.Value = DataBase.CarsList[Id].Carry;
-            //sold.Checked = DataBase.CarsList[Id].Sold;
-            ////isUsed.Checked = DataBase.CarsList[Id].IsUsed;
-            //if (DataBase.CarsList[Id].IsUsed)
-            //{
-            //    this.sold.Hide();
-            //}
-            //else
-            //{
-            //    this.sold.Show();
-            //}
+            name.Text = DataBase.FreightsListList[Id].Name;
+            type.Text = DataBase.FreightsListList[Id].Type;
+            adr.Checked = DataBase.FreightsListList[Id].Adr;
+            foreach (var item in CheckBoxList)
+            {
+                item.Checked = DataBase.FreightsListList[Id].AdrClass[(int)item.Tag];
+            }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //int Id = -1 + int.Parse(dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString());
             if (id.Text.Length == 0)
                 return;
-            if (!Functions.AllowedPlate(plate.Text, DataBase.CarsList))
-            {
-                MessageBox.Show("Taki numer rejestracji już występuje");
-                return;
-            }
-            //int Id = -1 + int.Parse(id.Text);
-            int Id = Functions.FindCar(int.Parse(id.Text), DataBase.CarsList);
+            int Id = Functions.FindFreightsList(int.Parse(id.Text), DataBase.FreightsListList);
             if (Id >= 0)
             {
-                ////DataBase.CarsList[Id].Make = make.Text;
-                //DataBase.CarsList[Id].Model = model.Text;
-                //DataBase.CarsList[Id].Comment = comment.Text;
-                //DataBase.CarsList[Id].Plate = plate.Text;
-                //DataBase.CarsList[Id].Carry = (uint)carry.Value;
-                //DataBase.CarsList[Id].Sold = sold.Checked;
-                ////DataBase.CarsList[Id].IsUsed = isUsed.Checked;
+                DataBase.FreightsListList[Id].Name = name.Text;
+                DataBase.FreightsListList[Id].Adr = adr.Checked;
+                DataBase.FreightsListList[Id].Type = type.Text;
+                DataBase.FreightsListList[Id].Comment = comment.Text;
+
+                foreach (var item in CheckBoxList)
+                {
+                    DataBase.FreightsListList[Id].AdrClass[(int)item.Tag] = item.Checked;
+                }
                 //DataBase.UpdateCars(Id, int.Parse(id.Text));
             }
             LoadData(DataBase);
@@ -218,7 +191,17 @@ namespace bazy_danych
 
         private void sold_CheckedChanged(object sender, EventArgs e)
         {
+            CheckBox cb = (CheckBox)sender;
 
+            foreach (var item in CheckBoxList)
+            {
+                item.Enabled = cb.Checked;
+                if (!cb.Checked)
+                    item.Checked = false;
+            }
         }
+
+
+
     }
 }
