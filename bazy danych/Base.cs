@@ -14,6 +14,7 @@ namespace bazy_danych
         private string DataBase { get; set; }
         private string UID { get; set; }
         private string Password { get; set; }
+        private string Charset { get; set; }
         public MySqlConnection MySqlConnector;
         public List<Drivers> DriversList;
         public List<Cars> CarsList;
@@ -44,8 +45,9 @@ namespace bazy_danych
             Server = "localhost";
             DataBase = "projekt";
             UID = "root";
+            Charset = "utf8";
             Password = "";
-            string Connection = "SERVER=" + Server + ";" + "DATABASE=" + DataBase + ";" + "UID=" + UID + ";" + "PASSWORD=" + Password + ";";
+            string Connection = "SERVER=" + Server + ";" + "DATABASE=" + DataBase + ";" + "UID=" + UID + ";" + "PASSWORD=" + Password + ";" + "CHARSET=" + Charset;
             MySqlConnector = new MySqlConnection(Connection);
         }
 
@@ -248,6 +250,79 @@ namespace bazy_danych
                 //result += "\n" + reader.GetString("Name") + "	" +reader.GetString("Surname") + "	" +reader.GetUInt32("Wage") + "	" +
                 //    reader.GetBoolean("ADR_License") + "	" +reader.GetBoolean("Employed") + "	" +reader.GetString("Comment");
             }
+            MySqlConnector.Close();
+        }
+        public void UpdateFreightsList(int IdList, int IdBase)
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "UPDATE Freights_list SET Name=@Name, Type=@Type, ADR=@ADR, ADR_Class=@Class, comment=@Comment WHERE id = @Id";
+            cmd.Parameters.AddWithValue("@Name", FreightsListList[IdList].Name);
+            cmd.Parameters.AddWithValue("@Type", FreightsListForm.Types[Functions.FindStringIndex(FreightsListForm.TypesPL,FreightsListList[IdList].Type)]);
+
+            string adrClass = "";
+            int i = 0;
+            foreach (var item in FreightsListList[IdList].AdrClass)
+            {
+                if (item)
+                {
+                    adrClass += Functions.classes[i] + ",";
+                }
+                i++;
+            }
+            if (adrClass.Length > 0)
+                adrClass.Remove(adrClass.Length - 1, 1);
+            else
+                FreightsListList[IdList].Adr = false;
+
+            cmd.Parameters.AddWithValue("@Class", adrClass);
+
+
+            if (FreightsListList[IdList].Adr)
+            {
+                cmd.Parameters.AddWithValue("@ADR", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@ADR", "False");
+            }
+            cmd.Parameters.AddWithValue("@Comment", FreightsListList[IdList].Comment);
+            cmd.Parameters.AddWithValue("@Id", (IdBase));
+            MySqlConnector.Open();
+            cmd.ExecuteNonQuery();
+            MySqlConnector.Close();
+        }
+        public void AddFreightsList(string name, string type, string adrClass, bool adr, string comment)
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "INSERT INTO Freights_list(Name,Type,adr,ADR_Class,Comment) VALUES (@Name,@Type,@adr,@adrClass,@Comment)";
+
+            cmd.Parameters.AddWithValue("@Name", name);
+            cmd.Parameters.AddWithValue("@Type", type);
+            cmd.Parameters.AddWithValue("@Comment", comment);
+            cmd.Parameters.AddWithValue("@adrClass", adrClass);
+
+            if (adr)
+            {
+                cmd.Parameters.AddWithValue("@adr", "True");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@adr", "False");
+            }
+            
+            try
+            {
+                MySqlConnector.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception exc)
+            {
+                System.Console.WriteLine(exc.Message);
+            }
+            uint Id = (uint)cmd.LastInsertedId;
+            FreightsListList.Add(new FreightsList(Id, name, type,adrClass,adr,comment));
             MySqlConnector.Close();
         }
     }

@@ -15,8 +15,8 @@ namespace bazy_danych
     public partial class FreightsListForm : Form
     {
         string[] ColumnNames = { "Id", "Nazwa towaru", "Typ", "Wymagany ADR", "Klasa ADR", "Komentarz" };
-        string[] TypesPL = { "Kontener", "Wywrotka", "Platforma", "Laweta", "Chłodnia", "Cysterna" };
-        string[] Types = { "Container", "Dump", "Flatbed", "Lowboy", "Refrigerated", "Tank" };
+        public static string[] TypesPL = { "Kontener", "Wywrotka", "Platforma", "Laweta", "Chłodnia", "Cysterna" };
+        public static string[] Types = { "Container", "Dump", "Flatbed", "Lowboy", "Refrigerated", "Tank" };
         string[] ADRClass = { "Materiały wybuchowe", "Gazy", "Materiały ciekłe zapalne", "Materiały stałe zapalne", "Materiały samozapalne", 
                                 "Materiały wytwarzające \nw zetknięciu z wodą gazy palne", "Materiały utleniające", "Materiały organiczne", 
                                 "Materiały trujące", "Materiały zakaźne", "Materiały \npromieniotwórcze", "Materiały żrące", 
@@ -128,6 +128,11 @@ namespace bazy_danych
         {
             name.Text = DataBase.FreightsListList[Id].Name;
             type.Text = DataBase.FreightsListList[Id].Type;
+            comment.Text = DataBase.FreightsListList[Id].Comment;
+            if (Functions.FindStringIndex(Types, DataBase.FreightsListList[Id].Type) < 0)
+                type.Text = DataBase.FreightsListList[Id].Type;
+            else
+                type.Text = TypesPL[Functions.FindStringIndex(Types, DataBase.FreightsListList[Id].Type)];
             adr.Checked = DataBase.FreightsListList[Id].Adr;
             foreach (var item in CheckBoxList)
             {
@@ -152,21 +157,37 @@ namespace bazy_danych
                 {
                     DataBase.FreightsListList[Id].AdrClass[(int)item.Tag] = item.Checked;
                 }
-                //DataBase.UpdateCars(Id, int.Parse(id.Text));
+                DataBase.UpdateFreightsList(Id, int.Parse(id.Text));
             }
             LoadData(DataBase);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            FreightsList.Types a = FreightsList.Types.Container;
-            string b = "Flatbed";
-            a = (FreightsList.Types)2;
-            Console.WriteLine("Types a = " + a + (int)a);
-            Console.WriteLine(b + " == " + a + "  asasd ");
-            Console.WriteLine((string)a.ToString() == b);
-            Console.WriteLine("");
-            MessageBox.Show(dataGridView1.Rows[1].Cells[4].Value.ToString());
+            //FreightsList.Types a = FreightsList.Types.Container;
+            //string b = "Flatbed";
+            //a = (FreightsList.Types)2;
+            //Console.WriteLine("Types a = " + a + (int)a);
+            //Console.WriteLine(b + " == " + a + "  asasd ");
+            //Console.WriteLine((string)a.ToString() == b);
+            //Console.WriteLine("");
+            //MessageBox.Show(dataGridView1.Rows[1].Cells[4].Value.ToString());
+
+            string adrClass = "";
+            foreach (var item in CheckBoxList)
+            {
+                if (item.Checked)
+                {
+                    adrClass += Functions.classes[(int)item.Tag] + ",";
+                }
+            }
+            if (adrClass.Length > 0)
+                adrClass.Remove(adrClass.Length - 1, 1);
+            else
+                adr.Checked = false;
+            DataBase.AddFreightsList(name.Text, Types[Functions.FindStringIndex(TypesPL, type.Text)], adrClass, adr.Checked, comment.Text);
+            LoadData(DataBase);
+
             //if (Functions.AllowedPlate(plate.Text, DataBase.CarsList))
             //{
             //    //DataBase.AddCar(plate.Text, make.Text, model.Text, (uint)carry.Value, false, false, comment.Text);
