@@ -189,7 +189,7 @@
             this.Controls.Add(this.dataGridView1);
             this.MinimumSize = new System.Drawing.Size(600, 500);
             this.Name = "FreightsListForm";
-            this.Text = "Cars";
+            this.Text = "FreightsList";
             this.Resize += new System.EventHandler(this.CarsForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
