@@ -103,7 +103,7 @@
             this.comment.Multiline = true;
             this.comment.Name = "comment";
             this.comment.Size = new System.Drawing.Size(124, 119);
-            this.comment.TabIndex = 12;
+            this.comment.TabIndex = 5;
             // 
             // label5
             // 
@@ -167,7 +167,7 @@
             this.type.Location = new System.Drawing.Point(100, 62);
             this.type.Name = "type";
             this.type.Size = new System.Drawing.Size(154, 21);
-            this.type.TabIndex = 18;
+            this.type.TabIndex = 4;
             // 
             // FreightsListForm
             // 

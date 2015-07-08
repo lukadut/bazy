@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace bazy_danych
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         Base DataBase;
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             DataBase = new Base();

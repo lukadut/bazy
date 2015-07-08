@@ -52,7 +52,7 @@ namespace bazy_danych
                 cb.Location = new System.Drawing.Point(260 + ((i + 1) / 8) * 60, 13 + 20 * ((i % 7)));
                 cb.Enabled = false;
                 cb.Size = new System.Drawing.Size(58, 17);
-                cb.TabIndex = 19;
+                cb.TabIndex = 6+i;
                 cb.Text = Functions.classes[i];
                 cb.Tag = i;
                 cb.MouseEnter += ((object sender, EventArgs e) => cb.Text = Functions.classes[(int)cb.Tag] + " " + ADRClass[(int)cb.Tag]);
