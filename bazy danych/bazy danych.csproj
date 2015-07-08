@@ -46,46 +46,81 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base.cs" />
-    <Compile Include="Cars.cs" />
-    <Compile Include="Drivers.cs" />
-    <Compile Include="CarsForm.cs">
+    <Compile Include="Cars\Cars.cs" />
+    <Compile Include="Companies\CitiesList.cs" />
+    <Compile Include="Companies\CitiesListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CarsForm.Designer.cs">
+    <Compile Include="Companies\CitiesListForm.Designer.cs">
+      <DependentUpon>CitiesListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Companies\Companies.cs" />
+    <Compile Include="Companies\CompaniesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Companies\CompaniesForm.Designer.cs">
+      <DependentUpon>CompaniesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Companies\CompanyNamesList.cs" />
+    <Compile Include="Companies\CompanyNamesListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Companies\CompanyNamesListForm.Designer.cs">
+      <DependentUpon>CompanyNamesListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Drivers\Drivers.cs" />
+    <Compile Include="Cars\CarsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cars\CarsForm.Designer.cs">
       <DependentUpon>CarsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DriversForm.cs">
+    <Compile Include="Drivers\DriversForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DriversForm.Designer.cs">
+    <Compile Include="Drivers\DriversForm.Designer.cs">
       <DependentUpon>DriversForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FreightsList.cs" />
-    <Compile Include="FreightsListForm.cs">
+    <Compile Include="Freights\Freights.cs" />
+    <Compile Include="Freights\FreightsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FreightsListForm.Designer.cs">
+    <Compile Include="Freights\FreightsForm.Designer.cs">
+      <DependentUpon>FreightsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Freights\FreightsList.cs" />
+    <Compile Include="Freights\FreightsListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Freights\FreightsListForm.Designer.cs">
       <DependentUpon>FreightsListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CarsForm.resx">
+    <Compile Include="Shipping\Shipping.cs" />
+    <Compile Include="Shipping\ShippingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shipping\ShippingForm.Designer.cs">
+      <DependentUpon>ShippingForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Cars\CarsForm.resx">
       <DependentUpon>CarsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DriversForm.resx">
+    <EmbeddedResource Include="Drivers\DriversForm.resx">
       <DependentUpon>DriversForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FreightsListForm.resx">
+    <EmbeddedResource Include="Freights\FreightsListForm.resx">
       <DependentUpon>FreightsListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -109,6 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Baza\baza.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

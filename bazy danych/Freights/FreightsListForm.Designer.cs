@@ -54,7 +54,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(572, 265);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.TabIndex = 22;
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
             // 
             // label1
@@ -72,7 +72,7 @@
             this.id.Name = "id";
             this.id.ReadOnly = true;
             this.id.Size = new System.Drawing.Size(154, 20);
-            this.id.TabIndex = 2;
+            this.id.TabIndex = 1;
             // 
             // label2
             // 
@@ -89,7 +89,7 @@
             this.adr.Location = new System.Drawing.Point(12, 89);
             this.adr.Name = "adr";
             this.adr.Size = new System.Drawing.Size(105, 17);
-            this.adr.TabIndex = 11;
+            this.adr.TabIndex = 4;
             this.adr.Text = "Wymagany ADR";
             this.adr.UseVisualStyleBackColor = true;
             this.adr.CheckedChanged += new System.EventHandler(this.sold_CheckedChanged);
@@ -103,7 +103,7 @@
             this.comment.Multiline = true;
             this.comment.Name = "comment";
             this.comment.Size = new System.Drawing.Size(124, 119);
-            this.comment.TabIndex = 5;
+            this.comment.TabIndex = 18;
             // 
             // label5
             // 
@@ -119,7 +119,7 @@
             this.button1.Location = new System.Drawing.Point(12, 156);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 23);
-            this.button1.TabIndex = 14;
+            this.button1.TabIndex = 19;
             this.button1.Text = "Zapisz zmiany";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -129,7 +129,7 @@
             this.button2.Location = new System.Drawing.Point(129, 156);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 15;
+            this.button2.TabIndex = 20;
             this.button2.Text = "Wyczyść";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -139,7 +139,7 @@
             this.button3.Location = new System.Drawing.Point(233, 156);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(106, 23);
-            this.button3.TabIndex = 16;
+            this.button3.TabIndex = 21;
             this.button3.Text = "Dodaj towar";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -150,7 +150,7 @@
             this.name.MaxLength = 30;
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(154, 20);
-            this.name.TabIndex = 3;
+            this.name.TabIndex = 2;
             // 
             // label6
             // 
@@ -167,7 +167,7 @@
             this.type.Location = new System.Drawing.Point(100, 62);
             this.type.Name = "type";
             this.type.Size = new System.Drawing.Size(154, 21);
-            this.type.TabIndex = 4;
+            this.type.TabIndex = 3;
             // 
             // FreightsListForm
             // 
