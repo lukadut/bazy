@@ -54,6 +54,7 @@ namespace bazy_danych
                 MessageBox.Show("Wystąpił błąd w połączeniu z bazą.");
                 //this.Close();
             }
+            Functions.TranslateTrueFalse(dataGridView1);
         }
         void ClearForm()
         {

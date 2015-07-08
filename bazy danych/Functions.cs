@@ -64,5 +64,19 @@ namespace bazy_danych
             }
             return result;
         }
+        public static void TranslateTrueFalse(System.Windows.Forms.DataGridView dataGridView1)
+        {
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                for (int r = 0; r < dataGridView1.RowCount; r++)
+                {
+                    if ((dataGridView1.Rows[r].Cells[i].Value + "") == "True")
+                        dataGridView1.Rows[r].Cells[i].Value = "Tak";
+                    else if ((dataGridView1.Rows[r].Cells[i].Value + "") == "False")
+                        dataGridView1.Rows[r].Cells[i].Value = "Nie";
+                }
+            }
+        }
+
     }
 }

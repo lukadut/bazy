@@ -15,7 +15,8 @@ namespace bazy_danych
     public partial class FreightsListForm : Form
     {
         string[] ColumnNames = { "Id", "Nazwa towaru", "Typ", "Wymagany ADR", "Klasa ADR", "Komentarz" };
-        string[] Types = { "Kontener", "Wywrotka", "Platforma", "Laweta", "Chłodnia", "Cysterna" };
+        string[] TypesPL = { "Kontener", "Wywrotka", "Platforma", "Laweta", "Chłodnia", "Cysterna" };
+        string[] Types = { "Container", "Dump", "Flatbed", "Lowboy", "Refrigerated", "Tank" };
         //string[] ADRClass = {}
         Base DataBase;
         List<CheckBox> CheckBoxList;
@@ -73,8 +74,27 @@ namespace bazy_danych
                 for (int i = 0; i < dataGridView1.Columns.Count; i++)
                 {
                     dataGridView1.Columns[i].Width = dataGridView1.Width / dataGridView1.Columns.Count - 8;
+                    //for (int j = 0; j < dataGridView1.RowCount; j++)
+                    //{
+
+                    //}
                 }
                 dataGridView1.Columns[dataGridView1.Columns.Count - 1].Width+= 4;
+
+                Functions.TranslateTrueFalse(dataGridView1);
+
+
+                        
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                for (int r = 0; r < dataGridView1.RowCount; r++)
+                {
+                    if (Types.Contains(dataGridView1.Rows[r].Cells[i].Value + ""))
+                        dataGridView1.Rows[r].Cells[i].Value = TypesPL[(int)(FreightsList.Types)Enum.Parse(typeof(FreightsList.Types),dataGridView1.Rows[r].Cells[i].Value + "")];
+                }
+            }
+       
+                
             }
             catch (Exception ex)
             {
@@ -166,16 +186,24 @@ namespace bazy_danych
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (Functions.AllowedPlate(plate.Text, DataBase.CarsList))
-            {
-                //DataBase.AddCar(plate.Text, make.Text, model.Text, (uint)carry.Value, false, false, comment.Text);
-                //DataBase.CarsList.Add(new Cars());
-                LoadData(DataBase);
-            }
-            else
-            {
-                MessageBox.Show("Istnieje już auto o takiej rejestracji");
-            }
+            FreightsList.Types a = FreightsList.Types.Container;
+            string b = "Flatbed";
+            a = (FreightsList.Types)2;
+            Console.WriteLine("Types a = " + a + (int)a);
+            Console.WriteLine(b + " == " + a + "  asasd ");
+            Console.WriteLine((string)a.ToString() == b);
+            Console.WriteLine("");
+            MessageBox.Show(dataGridView1.Rows[1].Cells[4].Value.ToString());
+            //if (Functions.AllowedPlate(plate.Text, DataBase.CarsList))
+            //{
+            //    //DataBase.AddCar(plate.Text, make.Text, model.Text, (uint)carry.Value, false, false, comment.Text);
+            //    //DataBase.CarsList.Add(new Cars());
+            //    //LoadData(DataBase);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Istnieje już auto o takiej rejestracji");
+            //}
         }
 
 

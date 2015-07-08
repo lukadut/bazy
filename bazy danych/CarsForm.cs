@@ -48,11 +48,13 @@ namespace bazy_danych
                     dataGridView1.Columns[i].Width = dataGridView1.Width / dataGridView1.Columns.Count -6;
                 }
                 dataGridView1.Columns[dataGridView1.Columns.Count - 1].Width += 4;
+                Functions.TranslateTrueFalse(dataGridView1);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Wystąpił błąd w połączeniu z bazą.");
                 //this.Close();
+            
             }
         }
         void ClearForm()
