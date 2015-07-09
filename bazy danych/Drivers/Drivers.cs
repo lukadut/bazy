@@ -22,7 +22,12 @@ namespace bazy_danych
         public Drivers(uint id, string name, string surname, uint wage, bool adr, bool employed, bool busy, string comment)
         {
             Id = id;
-            Name = name;
+            if (name == null)
+            {
+                Name = "null";
+            }
+            else
+                Name = name.ToString();
             Surname = surname;
             Wage = wage;
             Adr = adr;

@@ -47,5 +47,46 @@ namespace bazy_danych
             FreightsListForm FLF = new FreightsListForm(DataBase);
             FLF.Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DateTime czas;
+
+            MySql.Data.MySqlClient.MySqlConnection MySqlConnector;
+            //string result = "";
+            string Server = "localhost";
+            string DataBase = "projekt";
+            string UID = "root";
+            string Charset = "utf8";
+            string Password = "";
+            string Connection = "SERVER=" + Server + ";" + "DATABASE=" + DataBase + ";" + "UID=" + UID + ";" + "PASSWORD=" + Password + ";" + "CHARSET=" + Charset;
+            MySqlConnector = new MySql.Data.MySqlClient.MySqlConnection(Connection);
+            MySql.Data.MySqlClient.MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "SELECT * FROM shipping";
+            MySqlConnector.Open();
+            MySql.Data.MySqlClient.MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                if (!reader.IsDBNull(5))
+                {
+                    czas = reader.GetDateTime(5);
+                
+                    //DateTime test = (DateTime)czas;
+                    System.Console.WriteLine("miesiac " + czas.ToUniversalTime() + czas.DayOfWeek);
+                }
+                else
+                {
+                    System.Console.WriteLine("Czas jest nieokreslony");
+                }
+               // DriversList.Add(new Drivers(reader.GetUInt32("Id"), name /*reader.GetString("Name")*/, reader.GetString("Surname"), reader.GetUInt32("Wage"), reader.GetBoolean("ADR_License"), reader.GetBoolean("Employed"), reader.GetBoolean("Busy"), reader.GetString("Comment")));
+                //result += "\n" + reader.GetString("Name") + "	" +reader.GetString("Surname") + "	" +reader.GetUInt32("Wage") + "	" +
+                //    reader.GetBoolean("ADR_License") + "	" +reader.GetBoolean("Employed") + "	" +reader.GetString("Comment");
+            }
+            MySqlConnector.Close();
+            //return result;
+
+        
+        }
     }
 }

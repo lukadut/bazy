@@ -64,7 +64,12 @@ namespace bazy_danych
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                DriversList.Add(new Drivers(reader.GetUInt32("Id"), reader.GetString("Name"), reader.GetString("Surname"), reader.GetUInt32("Wage"), reader.GetBoolean("ADR_License"), reader.GetBoolean("Employed"), reader.GetBoolean("Busy"), reader.GetString("Comment")));
+                string name = "";
+                if (!reader.IsDBNull(1))
+                {
+                    name = reader.GetString(1);
+                }
+                DriversList.Add(new Drivers(reader.GetUInt32("Id"), name /*reader.GetString("Name")*/, reader.GetString("Surname"), reader.GetUInt32("Wage"), reader.GetBoolean("ADR_License"), reader.GetBoolean("Employed"), reader.GetBoolean("Busy"), reader.GetString("Comment")));
                 //result += "\n" + reader.GetString("Name") + "	" +reader.GetString("Surname") + "	" +reader.GetUInt32("Wage") + "	" +
                 //    reader.GetBoolean("ADR_License") + "	" +reader.GetBoolean("Employed") + "	" +reader.GetString("Comment");
             }

@@ -117,15 +117,16 @@ namespace bazy_danych
         private void button1_Click(object sender, EventArgs e)
         {
             //int Id = -1 + int.Parse(dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString());
+            int Id = Functions.FindCar(int.Parse(id.Text), DataBase.CarsList);
             if (id.Text.Length == 0)
                 return;
-            if (!Functions.AllowedPlate(plate.Text, DataBase.CarsList))
+            if (!Functions.AllowedPlate(plate.Text, DataBase.CarsList) && plate.Text != DataBase.CarsList[Id].Plate)
             {
                 MessageBox.Show("Taki numer rejestracji już występuje");
                 return;
             }
             //int Id = -1 + int.Parse(id.Text);
-            int Id = Functions.FindCar(int.Parse(id.Text), DataBase.CarsList);
+            
             if (Id >= 0)
             {
                 DataBase.CarsList[Id].Make = make.Text;
