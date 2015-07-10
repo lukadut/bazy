@@ -30,13 +30,12 @@ CREATE TABLE IF NOT EXISTS `cars` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Zrzucanie danych dla tabeli projekt.cars: ~5 rows (około)
-DELETE FROM `cars`;
 /*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-INSERT INTO `cars` (`Id`, `Number_plate`, `Make`, `Model`, `Carry`, `IsUsed`, `Sold`, `Comment`) VALUES
+REPLACE INTO `cars` (`Id`, `Number_plate`, `Make`, `Model`, `Carry`, `IsUsed`, `Sold`, `Comment`) VALUES
 	(1, 'fssdgsdg', 'fgdf', 'dfgfdg', 65535, 'False', 'False', ''),
-	(2, 'resa3', 'marka', 'model', 5, 'False', 'False', ''),
-	(4, 'aa', 'dasdsad', 'asdas', 0, 'True', 'False', ''),
-	(5, 'aa .', 'dddd', 'asdas', 0, 'False', 'False', ''),
+	(2, 'resa3', 'Marka', 'Model', 5, 'False', 'False', ''),
+	(4, 'aadssd', 'dasdsad', 'asdas', 0, 'False', 'False', 'usun komentarz'),
+	(5, 'AA1.', 'inna marka', 'asdas', 0, 'False', 'False', ''),
 	(6, 'aa1', 'asds', 'asdsad', 4, 'False', 'False', '');
 /*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 
@@ -46,14 +45,18 @@ CREATE TABLE IF NOT EXISTS `cities_list` (
   `Id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `City` char(30) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nazwa miasta',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.cities_list: ~2 rows (około)
-DELETE FROM `cities_list`;
+-- Zrzucanie danych dla tabeli projekt.cities_list: ~7 rows (około)
 /*!40000 ALTER TABLE `cities_list` DISABLE KEYS */;
-INSERT INTO `cities_list` (`Id`, `City`) VALUES
+REPLACE INTO `cities_list` (`Id`, `City`) VALUES
 	(1, 'las vegas'),
-	(2, 'majami');
+	(2, 'majami'),
+	(3, 'nju jork'),
+	(4, 'area 51'),
+	(5, 'boston masetchuseds'),
+	(6, 'czikago'),
+	(7, 'alabama');
 /*!40000 ALTER TABLE `cities_list` ENABLE KEYS */;
 
 
@@ -69,14 +72,17 @@ CREATE TABLE IF NOT EXISTS `companies` (
   KEY `Company` (`CompanyId`),
   CONSTRAINT `City` FOREIGN KEY (`CityId`) REFERENCES `cities_list` (`Id`),
   CONSTRAINT `Company` FOREIGN KEY (`CompanyId`) REFERENCES `company_name_list` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.companies: ~2 rows (około)
-DELETE FROM `companies`;
+-- Zrzucanie danych dla tabeli projekt.companies: ~6 rows (około)
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` (`Id`, `CityId`, `CompanyId`, `Addres`, `Comment`) VALUES
+REPLACE INTO `companies` (`Id`, `CityId`, `CompanyId`, `Addres`, `Comment`) VALUES
 	(1, 1, 1, 'holiłud', ''),
-	(2, 2, 1, 'bicz', '');
+	(2, 2, 1, 'bicz', ''),
+	(3, 2, 2, '', ''),
+	(4, 6, 4, '', ''),
+	(5, 4, 5, '', ''),
+	(6, 5, 4, '', '');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 
 
@@ -85,13 +91,17 @@ CREATE TABLE IF NOT EXISTS `company_name_list` (
   `Id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `Company` char(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nazwa firmy',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.company_name_list: ~1 rows (około)
-DELETE FROM `company_name_list`;
+-- Zrzucanie danych dla tabeli projekt.company_name_list: ~6 rows (około)
 /*!40000 ALTER TABLE `company_name_list` DISABLE KEYS */;
-INSERT INTO `company_name_list` (`Id`, `Company`) VALUES
-	(1, 'snoop dogg');
+REPLACE INTO `company_name_list` (`Id`, `Company`) VALUES
+	(1, 'snoop dogg'),
+	(2, 'hot line'),
+	(3, 'firma'),
+	(4, 'jp100%'),
+	(5, 'jp98%'),
+	(6, 'mlg');
 /*!40000 ALTER TABLE `company_name_list` ENABLE KEYS */;
 
 
@@ -124,22 +134,21 @@ CREATE TABLE IF NOT EXISTS `drivers` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Zrzucanie danych dla tabeli projekt.drivers: ~17 rows (około)
-DELETE FROM `drivers`;
 /*!40000 ALTER TABLE `drivers` DISABLE KEYS */;
-INSERT INTO `drivers` (`Id`, `Name`, `Surname`, `Wage`, `ADR_License`, `Employed`, `Busy`, `Comment`) VALUES
+REPLACE INTO `drivers` (`Id`, `Name`, `Surname`, `Wage`, `ADR_License`, `Employed`, `Busy`, `Comment`) VALUES
 	(1, 'Jan', 'Ja', 12345, 'True', 'True', 'False', 'sample text sample text \r\n\r\nsample text sample text sample text sample text '),
-	(2, 'jasoi', 'qwertyza', 999, 'True', 'True', 'True', ''),
-	(3, 'kierowca', '4', 1000, 'True', 'False', 'True', ''),
+	(2, 'Jasoi', 'Qwertyza', 999, 'True', 'True', 'True', ''),
+	(3, '', '4', 1000, 'True', 'False', 'True', ''),
 	(4, 'kierowca', '4', 1000, 'True', 'False', 'True', ''),
-	(5, 'kierowca', '5', 1001, 'True', 'True', 'True', ''),
+	(5, 'Kierowca', '5', 1001, 'True', 'True', 'True', ''),
 	(6, 'test numer 6', 'test', 1, 'False', 'True', 'False', ''),
-	(8, 'test numer 8', 'test2', 1500, 'True', 'True', 'False', ''),
+	(8, 'Test Numer 8', 'Test2', 1500, 'True', 'True', 'False', 'komentarz'),
 	(9, 'test', 'test2', 1500, 'True', 'True', 'False', ''),
 	(10, 'test 10', 'test2', 1500, 'True', 'True', 'False', ''),
 	(11, 'test', 'test2', 1500, 'True', 'True', 'False', ''),
 	(12, 'test 12 a', 'test2', 1500, 'True', 'True', 'False', ''),
 	(13, 'abcd', 'def', 3334, 'False', 'False', 'False', ''),
-	(14, '1234567890123456789012345678901234567890', '1234567890123456789012345678901234567890', 1, 'False', 'False', 'True', ''),
+	(14, '1234567890123456789012345678901234567890', '1234567890123456789012345678901234567890', 1, 'False', 'False', 'False', ''),
 	(15, '1234567890123456789012345678901234567890', '1234567890123456789012345678901234567890', 2, 'False', 'True', 'False', ''),
 	(16, '1234567890123456789012345678901234567890', '1234567890123456789012345678901234567890', 1, 'False', 'True', 'False', ''),
 	(17, 'sample', 'texte', 2, 'True', 'True', 'False', ''),
@@ -167,9 +176,8 @@ CREATE TABLE IF NOT EXISTS `freights` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Zrzucanie danych dla tabeli projekt.freights: ~1 rows (około)
-DELETE FROM `freights`;
 /*!40000 ALTER TABLE `freights` DISABLE KEYS */;
-INSERT INTO `freights` (`Id`, `FreightId`, `From`, `To`, `ScheduledArrive`, `Amount`, `Weight`, `Comment`) VALUES
+REPLACE INTO `freights` (`Id`, `FreightId`, `From`, `To`, `ScheduledArrive`, `Amount`, `Weight`, `Comment`) VALUES
 	(1, 1, 1, 2, '2015-07-08 14:52:13', 254, 1, '');
 /*!40000 ALTER TABLE `freights` ENABLE KEYS */;
 
@@ -186,10 +194,9 @@ CREATE TABLE IF NOT EXISTS `freights_list` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Zrzucanie danych dla tabeli projekt.freights_list: ~8 rows (około)
-DELETE FROM `freights_list`;
 /*!40000 ALTER TABLE `freights_list` DISABLE KEYS */;
-INSERT INTO `freights_list` (`Id`, `Name`, `Type`, `ADR`, `ADR_Class`, `Comment`) VALUES
-	(1, 'weed', 'Tank', 'True', '4.1', 'marihunanen w szczykawkach'),
+REPLACE INTO `freights_list` (`Id`, `Name`, `Type`, `ADR`, `ADR_Class`, `Comment`) VALUES
+	(1, 'marichuanina', 'Dump', 'True', '4.1', 'marihunanen w szczykawkach'),
 	(2, 'nazwa', 'Lowboy', 'True', '2,4.2,4.3', ''),
 	(3, 'dziwne rzeczy', 'Dump', 'True', '2,9', 'hava nagila'),
 	(4, 'mleko', 'Refrigerated', 'False', '', 'hava nagila'),
@@ -229,18 +236,17 @@ CREATE TABLE IF NOT EXISTS `shipping` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Zrzucanie danych dla tabeli projekt.shipping: ~9 rows (około)
-DELETE FROM `shipping`;
 /*!40000 ALTER TABLE `shipping` DISABLE KEYS */;
-INSERT INTO `shipping` (`Id`, `DriverId`, `CarId`, `FreightId`, `DepartTime`, `ArriveTime`, `Delivered`, `Comment`) VALUES
+REPLACE INTO `shipping` (`Id`, `DriverId`, `CarId`, `FreightId`, `DepartTime`, `ArriveTime`, `Delivered`, `Comment`) VALUES
 	(1, 1, 1, 1, '2015-07-06 18:10:13', '2015-07-07 11:08:35', 'On time', ''),
-	(3, 16, 6, 1, '2015-07-07 09:12:43', '2015-07-07 11:09:36', 'On time', ''),
+	(3, 16, 6, 1, '2015-07-07 09:12:43', '2015-07-09 15:09:04', 'Delayed', ''),
 	(5, 15, 4, 1, '2015-07-07 09:20:55', '2015-07-06 14:10:40', 'On time', ''),
 	(6, 15, 5, 1, '2015-07-07 11:20:54', '2015-07-07 11:31:44', 'On time', ''),
-	(7, 14, 2, 1, '2015-07-07 11:22:00', '2015-07-09 11:49:00', 'Delayed', ''),
+	(7, 14, 2, 1, '2015-07-07 11:22:00', '2015-07-05 11:49:00', 'On time', ''),
 	(8, 14, 5, 1, '2015-07-08 14:49:12', '2015-07-08 12:20:02', 'Delayed', ''),
 	(9, 8, 1, 1, '2015-07-08 14:58:30', '2015-07-08 15:01:57', 'On time', ''),
 	(10, 6, 5, 1, '2015-07-08 15:00:25', '2015-07-08 15:01:49', 'On time', ''),
-	(11, 14, 4, 1, '2015-07-08 15:07:28', NULL, 'Not yet', '');
+	(11, 14, 4, 1, '2015-07-08 15:07:28', '2015-07-07 15:42:05', 'On time', '');
 /*!40000 ALTER TABLE `shipping` ENABLE KEYS */;
 
 
