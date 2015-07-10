@@ -14,7 +14,7 @@ namespace bazy_danych
 {
     public partial class CompaniesForm : Form
     {
-        string[] ColumnNames = { "Id", "Nazwa towaru", "Typ", "Wymagany ADR", "Klasa ADR", "Komentarz" };
+        string[] ColumnNames = { "Id", "Miasto", "Firma", "Adres", "Komentarz" };
 
         Base DataBase;
         List<CheckBox> CheckBoxList;
@@ -57,11 +57,17 @@ namespace bazy_danych
                 DataSet DS = new DataSet();
                 BindingSource BS = new BindingSource();
                 MySqlDataAdapter MSDA = new MySqlDataAdapter("select * from companies", DataBase.MySqlConnector);
+                //DS.Tables[0].Columns[1].DataType = typeof(string);
+                DS.Tables.Add("Table");
+                DS.Tables[0].Columns.Add("Id");
+                DS.Tables[0].Columns.Add("CityId",typeof(string));
+                DS.Tables[0].Columns.Add("CompanyId",typeof(string));
                 MSDA.Fill(DS);
                 for (int i = 0; i < DS.Tables[0].Columns.Count; i++)
                     DS.Tables[0].Columns[i].ColumnName = ColumnNames[i];
+                //DS.Tables[0].Columns[1].DataType = typeof(string);
                 BS.DataSource = DS.Tables[0];
-
+                
                 dataGridView1.DataSource = BS;
 
                 for (int i = 0; i < dataGridView1.Columns.Count; i++)
@@ -70,14 +76,15 @@ namespace bazy_danych
                 }
                 dataGridView1.Columns[dataGridView1.Columns.Count - 1].Width += 4;
 
-                Functions.TranslateTrueFalse(dataGridView1);
+                ////Functions.TranslateTrueFalse(dataGridView1);
 
-                dataGridView1.Columns[1].ValueType = typeof(string);
-                for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                ////dataGridView1.Columns[1].ValueType = typeof(string);
+                System.Console.WriteLine(DS.Tables[0].Rows.Count);
+                for (int i = 0; i < DS.Tables[0].Rows.Count; i++)
                 {
-                    dataGridView1.Rows[i].Cells[1].ValueType = typeof(string);
                     Console.WriteLine(dataGridView1.Rows[i].Cells[1].ValueType);
                     dataGridView1.Rows[i].Cells[1].Value = DataBase.CitiesListList[Functions.FindCitiesList(int.Parse(dataGridView1.Rows[i].Cells[1].Value + ""), DataBase.CitiesListList)].City + "";
+                    dataGridView1.Rows[i].Cells[2].Value = DataBase.CompanyNamesListList[Functions.FindCompanyNamesList(int.Parse(dataGridView1.Rows[i].Cells[2].Value + ""), DataBase.CompanyNamesListList)].CompanyName + "";
                 }
 
 
@@ -94,7 +101,7 @@ namespace bazy_danych
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Wystąpił błąd w połączeniu z bazą.");
+                MessageBox.Show("Wystąpił błąd w połączeniu z bazą.\n"+ex.Message);
                 //this.Close();
             }
         }
@@ -187,9 +194,9 @@ namespace bazy_danych
         {
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {
-                dataGridView1.Columns[i].Width = dataGridView1.Width / dataGridView1.Columns.Count - 8;
+                dataGridView1.Columns[i].Width = dataGridView1.Width / dataGridView1.Columns.Count - 9;
             }
-            dataGridView1.Columns[dataGridView1.Columns.Count - 1].Width += 4;
+            dataGridView1.Columns[dataGridView1.Columns.Count - 1].Width += 2;
         }
 
         private void sold_CheckedChanged(object sender, EventArgs e)

@@ -98,7 +98,7 @@
             this.dateTimePicker1.ShowUpDown = true;
             this.dateTimePicker1.Size = new System.Drawing.Size(307, 20);
             this.dateTimePicker1.TabIndex = 6;
-            this.dateTimePicker1.Value = new System.DateTime(2015, 7, 10, 11, 36, 16, 621);
+            this.dateTimePicker1.Value = System.DateTime.Now;
             // 
             // button6
             // 
