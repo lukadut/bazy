@@ -38,16 +38,46 @@ namespace bazy_danych
             }
             return -1;
         }
+        public static int FindCitiesList(int IdInBase, List<CitiesList> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Id == IdInBase)
+                    return i;
+            }
+            return -1;
+        }
+
+        public static int FindCompanyNamesList(int IdInBase, List<CompanyNamesList> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Id == IdInBase)
+                    return i;
+            }
+            return -1;
+        }
+
+        public static int FindCompanies(int IdInBase, List<Companies> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Id == IdInBase)
+                    return i;
+            }
+            return -1;
+        }
 
         public static bool AllowedPlate(string newPlate, List<Cars>list)
         {
             //newPlate.Skip(5);
+            newPlate = newPlate.ToLower();
             newPlate = System.Text.RegularExpressions.Regex.Replace(newPlate,@"\s","");
             for (int i = 0; i < list.Count; i++)
             {
                 
                 //if (list[i].Plate == newPlate)
-                if(String.Equals(newPlate, System.Text.RegularExpressions.Regex.Replace(list[i].Plate,@"\s","")))
+                if(String.Equals(newPlate, System.Text.RegularExpressions.Regex.Replace(list[i].Plate,@"\s","").ToLower()))
                     return false;
             }
             return true;
@@ -91,6 +121,28 @@ namespace bazy_danych
         {
             return Array.FindIndex(strings, s => s.Equals(f));
         }
+        public static string TextFormat(string s)
+        {
+            string[] array = s.Split(' ');
+            string result = "";
+            foreach (var item in array)
+            {
+                item.Trim();
+                if (item.Length == 0)
+                    continue;
+                result += item.Substring(0, 1).ToUpper();
+                //result+= item.Substring(-1).ToUpper();
+                result += item.Substring(1).ToLower();
+                result += " ";
+            }
+            result = result.Trim();
+            return result;
+        }
 
+        public static void textBox_Leave(object sender, EventArgs e)
+        {
+            System.Windows.Forms.TextBox tb = (System.Windows.Forms.TextBox)sender;
+            tb.Text = Functions.TextFormat(tb.Text);
+        }
     }
 }

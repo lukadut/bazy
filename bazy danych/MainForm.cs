@@ -73,7 +73,7 @@ namespace bazy_danych
                     czas = reader.GetDateTime(5);
                 
                     //DateTime test = (DateTime)czas;
-                    System.Console.WriteLine("miesiac " + czas.ToUniversalTime() + czas.DayOfWeek);
+                    System.Console.WriteLine("miesiac " + czas + "dzien tygodnia "+ (int)czas.DayOfWeek);
                 }
                 else
                 {
@@ -87,6 +87,43 @@ namespace bazy_danych
             //return result;
 
         
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DateTime czas;
+            czas = new DateTime();
+           // czas = DateTime.Now;
+            czas = dateTimePicker1.Value;
+            MySql.Data.MySqlClient.MySqlConnection MySqlConnector;
+            //string result = "";
+            string Server = "localhost";
+            string DataBase = "projekt";
+            string UID = "root";
+            string Charset = "utf8";
+            string Password = "";
+            string Connection = "SERVER=" + Server + ";" + "DATABASE=" + DataBase + ";" + "UID=" + UID + ";" + "PASSWORD=" + Password + ";" + "CHARSET=" + Charset;
+            MySqlConnector = new MySql.Data.MySqlClient.MySqlConnection(Connection);
+            MySql.Data.MySqlClient.MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "UPDATE shipping SET arriveTime=@Model WHERE id = @Id";
+            cmd.Parameters.AddWithValue("@Model", czas);
+            cmd.Parameters.AddWithValue("@Id", 11);
+
+            MySqlConnector.Open();
+            cmd.ExecuteNonQuery();
+            MySqlConnector.Close();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine(Functions.TextFormat(textBox1.Text));
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            CompaniesForm CF = new CompaniesForm(DataBase);
+            CF.Show();
         }
     }
 }

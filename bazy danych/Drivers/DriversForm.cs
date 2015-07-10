@@ -21,6 +21,9 @@ namespace bazy_danych
         {
             DataBase = dataBase;
             InitializeComponent();
+            name.Leave += Functions.textBox_Leave;
+            surname.Leave += Functions.textBox_Leave;
+
             LoadData(DataBase);
             if (id >= 0 && Functions.FindDriver((int)id, DataBase.DriversList) >= 0)
             {
@@ -29,6 +32,7 @@ namespace bazy_danych
             }
                 //MessageBox.Show("ustalony?");
         }
+
         void LoadData(Base DataBase)
         {
             try

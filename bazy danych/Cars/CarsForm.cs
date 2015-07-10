@@ -21,6 +21,8 @@ namespace bazy_danych
         {
             DataBase = dataBase;
             InitializeComponent();
+            make.Leave += Functions.textBox_Leave;
+            model.Leave += Functions.textBox_Leave;
             LoadData(DataBase);
             if (id >= 0 && Functions.FindCar((int)id, DataBase.CarsList) >= 0)
             {

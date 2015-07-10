@@ -20,6 +20,10 @@ namespace bazy_danych
         public List<Cars> CarsList;
         public List<FreightsList> FreightsListList;
 
+        public List<CitiesList> CitiesListList;
+        public List<CompanyNamesList> CompanyNamesListList;
+        public List<Companies> CompaniesList;
+
 
         //MySqlCommand cmd;
        // private MySqlCommand cmd1;
@@ -34,6 +38,13 @@ namespace bazy_danych
             LoadCars();
             FreightsListList = new List<FreightsList>();
             LoadFreightsList();
+            CitiesListList = new List<CitiesList>();
+            LoadCitiesListList();
+            CompanyNamesListList = new List<CompanyNamesList>();
+            LoadCompaniesListList();
+            CompaniesList = new List<Companies>();
+            LoadCompanies();
+
             
         }
 
@@ -330,5 +341,47 @@ namespace bazy_danych
             FreightsListList.Add(new FreightsList(Id, name, type,adrClass,adr,comment));
             MySqlConnector.Close();
         }
+        public void LoadCitiesListList()
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "SELECT * FROM cities_list";
+            MySqlConnector.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                CitiesListList.Add(new CitiesList(reader.GetUInt32("Id"), reader.GetString("City")));
+            }
+            MySqlConnector.Close();
+        }
+        public void LoadCompaniesListList()
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "SELECT * FROM company_name_list";
+            MySqlConnector.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                CompanyNamesListList.Add(new CompanyNamesList(reader.GetUInt32("Id"), reader.GetString("Company")));
+            }
+            MySqlConnector.Close();
+        }
+        public void LoadCompanies()
+        {
+            MySqlCommand cmd;
+            cmd = MySqlConnector.CreateCommand();
+            cmd.CommandText = "SELECT * FROM companies";
+            MySqlConnector.Open();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int city = reader.GetInt32("CityId");
+                int companyname = reader.GetInt32("CompanyId");
+                CompaniesList.Add(new Companies(reader.GetUInt32("Id"),CitiesListList[Functions.FindCitiesList(city,CitiesListList)],CompanyNamesListList[Functions.FindCompanyNamesList(companyname,CompanyNamesListList)],reader.GetString("Addres"), reader.GetString("Comment")));
+            }
+            MySqlConnector.Close();
+        }
+        
     }
 }
