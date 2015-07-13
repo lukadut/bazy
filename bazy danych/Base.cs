@@ -20,7 +20,7 @@ namespace bazy_danych
         public List<Cars> CarsList;
         public List<FreightsList> FreightsListList;
         /// <summary>
-        /// ??????
+        /// ??????hh
         /// </summary>
         public List<CitiesList> CitiesListList;
         public List<CompanyNamesList> CompanyNamesListList;
