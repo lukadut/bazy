@@ -19,7 +19,9 @@ namespace bazy_danych
         public List<Drivers> DriversList;
         public List<Cars> CarsList;
         public List<FreightsList> FreightsListList;
-
+        /// <summary>
+        /// ??????
+        /// </summary>
         public List<CitiesList> CitiesListList;
         public List<CompanyNamesList> CompanyNamesListList;
         public List<Companies> CompaniesList;
