@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `cargo` (
   `Name` char(30) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nazwa ładunku',
   `Type` enum('Container','Dump','Flatbed','Lowboy','Refrigerated','Tank') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Container' COMMENT 'Rodzaj ładunku, kolejno: kontener, wywrotka, platforma, laweta, chłodnia, cysterna',
   `ADR` enum('True','False') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'False' COMMENT 'Potrzebna licencja ADR',
-  `ADR_Class` set('1','2','3','4.1','4.2','4.3','5.1','5.2','6.1','6.2','7','8','9') COLLATE utf8_unicode_ci NOT NULL COMMENT 'Typy ADR',
+  `ADR_Class` set('1','2','3','4.1','4.2','4.3','5.1','5.2','6.1','6.2','7','8','9') COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Typy ADR',
   `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
