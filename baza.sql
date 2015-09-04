@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
   `Id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `CityId` smallint(5) unsigned NOT NULL COMMENT 'Id miasta',
   `CompanyId` smallint(5) unsigned NOT NULL COMMENT 'Id firmy',
-  `Addres` char(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Adres - ulica, numer',
+  `Address` char(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Adres - ulica, numer',
   `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
   PRIMARY KEY (`Id`),
   KEY `City` (`CityId`),
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
 -- Zrzucanie danych dla tabeli projekt.companies: ~2 rows (około)
 DELETE FROM `companies`;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` (`Id`, `CityId`, `CompanyId`, `Addres`, `Comment`) VALUES
+INSERT INTO `companies` (`Id`, `CityId`, `CompanyId`, `Address`, `Comment`) VALUES
 	(1, 1, 1, 'holiłud', ''),
 	(2, 2, 1, 'bicz', '');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
