@@ -66,8 +66,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
   `Address` char(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Adres - ulica, numer',
   `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
   PRIMARY KEY (`Id`),
-  KEY `City` (`CityId`),
-  KEY `Company` (`CompanyId`),
+  UNIQUE KEY (`CityId`, `CompanyId`),
   CONSTRAINT `City` FOREIGN KEY (`CityId`) REFERENCES `cities_list` (`Id`),
   CONSTRAINT `Company` FOREIGN KEY (`CompanyId`) REFERENCES `company_name_list` (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
