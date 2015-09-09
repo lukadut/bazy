@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `shipping` (
   `DriverId` smallint(5) unsigned NOT NULL COMMENT 'Id kierowcy',
   `CarId` smallint(5) unsigned NOT NULL COMMENT 'Id pojazdu',
   `FreightId` smallint(5) unsigned NOT NULL COMMENT 'Id zlecenia',
-  `DepartTime` datetime NOT NULL COMMENT 'Czas odjazdu',
+  `DepartTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Czas odjazdu',
   `ArriveTime` datetime DEFAULT NULL COMMENT 'Czas przyjazdu',
   `Delivered` enum('On time','Delayed','Not yet') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Not yet' COMMENT 'Dostarczono',
   `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
