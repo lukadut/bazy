@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Wersja serwera:               5.5.21-log - MySQL Community Server (GPL)
--- Serwer OS:                    Win32
--- HeidiSQL Wersja:              9.1.0.4867
+-- Wersja serwera:               5.6.17 - MySQL Community Server (GPL)
+-- Serwer OS:                    Win64
+-- HeidiSQL Wersja:              9.2.0.4960
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -13,6 +13,36 @@
 -- Zrzut struktury bazy danych projekt
 CREATE DATABASE IF NOT EXISTS `projekt` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `projekt`;
+
+
+-- Zrzut struktury tabela projekt.cargo
+CREATE TABLE IF NOT EXISTS `cargo` (
+  `Id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Id',
+  `Name` char(30) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nazwa ładunku',
+  `Type` enum('Container','Dump','Flatbed','Lowboy','Refrigerated','Tank') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Container' COMMENT 'Rodzaj ładunku, kolejno: kontener, wywrotka, platforma, laweta, chłodnia, cysterna',
+  `ADR` enum('True','False') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'False' COMMENT 'Potrzebna licencja ADR',
+  `ADR_Class` set('1','2','3','4.1','4.2','4.3','5.1','5.2','6.1','6.2','7','8','9') COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Typy ADR',
+  `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Zrzucanie danych dla tabeli projekt.cargo: ~13 rows (około)
+/*!40000 ALTER TABLE `cargo` DISABLE KEYS */;
+REPLACE INTO `cargo` (`Id`, `Name`, `Type`, `ADR`, `ADR_Class`, `Comment`) VALUES
+	(1, 'Gruz', 'Dump', 'False', '', ''),
+	(2, 'Żwir', 'Dump', 'False', '', ''),
+	(3, 'Owoce', 'Container', 'False', '', ''),
+	(4, 'Warzywa', 'Container', 'False', '', ''),
+	(5, 'Zboże', 'Dump', 'False', '', ''),
+	(6, 'Benzyna', 'Tank', 'True', '3', ''),
+	(7, 'Diesel', 'Tank', 'True', '3', ''),
+	(8, 'Fajerwerki', 'Container', 'True', '1', ''),
+	(9, 'Rury stalowe', 'Flatbed', 'False', '', ''),
+	(10, 'Samochody', 'Lowboy', 'False', '', ''),
+	(11, 'Mięso', 'Refrigerated', 'False', '', ''),
+	(12, 'Lody', 'Refrigerated', 'False', '', ''),
+	(13, 'Walec drogowy', 'Lowboy', 'False', '', '');
+/*!40000 ALTER TABLE `cargo` ENABLE KEYS */;
 
 
 -- Zrzut struktury tabela projekt.cars
@@ -27,17 +57,26 @@ CREATE TABLE IF NOT EXISTS `cars` (
   `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Number plate` (`Number_plate`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.cars: ~5 rows (około)
-DELETE FROM `cars`;
+-- Zrzucanie danych dla tabeli projekt.cars: ~15 rows (około)
 /*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-INSERT INTO `cars` (`Id`, `Number_plate`, `Make`, `Model`, `Carry`, `IsUsed`, `Sold`, `Comment`) VALUES
-	(1, 'fssdgsdg', 'fgdf', 'dfgfdg', 65535, 'False', 'False', ''),
-	(2, 'resa3', 'marka', 'model', 5, 'False', 'False', ''),
-	(4, 'aa', 'dasdsad', 'asdas', 0, 'True', 'False', ''),
-	(5, 'aa .', 'dddd', 'asdas', 0, 'False', 'False', ''),
-	(6, 'aa1', 'asds', 'asdsad', 4, 'False', 'False', '');
+REPLACE INTO `cars` (`Id`, `Number_plate`, `Make`, `Model`, `Carry`, `IsUsed`, `Sold`, `Comment`) VALUES
+	(1, 'SG 00001', 'Man', 'Tgx', 40000, 'True', 'False', ''),
+	(2, 'SG 00002', 'Man', 'Tgx', 40000, 'False', 'False', ''),
+	(3, 'SG 00003', 'Man', 'Tgx', 40000, 'False', 'False', ''),
+	(4, 'SK 00001', 'Volvo', 'Fh16', 40000, 'False', 'False', ''),
+	(5, 'SK 00002', 'Volvo', 'Fh16', 40000, 'True', 'False', ''),
+	(6, 'SK 00003', 'Volvo', 'Fh16', 40000, 'True', 'False', ''),
+	(7, 'SK 00004', 'Volvo', 'Fh16', 40000, 'True', 'False', ''),
+	(8, 'SK 00005', 'Ford', 'Transit', 3499, 'False', 'False', ''),
+	(9, 'SK 00006', 'Ford', 'Transit', 3499, 'False', 'False', ''),
+	(10, 'SK 00007', 'Ford', 'Transit', 3499, 'False', 'False', ''),
+	(11, 'SK 00008', 'Ford', 'Transit', 3499, 'False', 'False', ''),
+	(12, 'SK 16546', 'Volvo', 'Fmx', 12000, 'False', 'False', ''),
+	(13, 'SK 1698Q', 'Volvo', 'Fmx', 12000, 'True', 'False', ''),
+	(14, 'SO 19843', 'Volvo', 'Fmx', 12000, 'False', 'False', 'Za granicą'),
+	(15, 'SK 6564G', 'Volvo', 'Fmx', 12000, 'False', 'False', '');
 /*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 
 
@@ -47,14 +86,19 @@ CREATE TABLE IF NOT EXISTS `cities_list` (
   `City` char(30) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nazwa miasta',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `City name` (`City`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.cities_list: ~2 rows (około)
-DELETE FROM `cities_list`;
+-- Zrzucanie danych dla tabeli projekt.cities_list: ~8 rows (około)
 /*!40000 ALTER TABLE `cities_list` DISABLE KEYS */;
-INSERT INTO `cities_list` (`Id`, `City`) VALUES
-	(1, 'las vegas'),
-	(2, 'majami');
+REPLACE INTO `cities_list` (`Id`, `City`) VALUES
+	(1, 'Gliwice'),
+	(7, 'Katowice'),
+	(3, 'Kostrzyn'),
+	(5, 'Orlen'),
+	(2, 'Płock'),
+	(6, 'Ruda Śląska'),
+	(8, 'Sieradz'),
+	(4, 'Zabrze');
 /*!40000 ALTER TABLE `cities_list` ENABLE KEYS */;
 
 
@@ -66,17 +110,25 @@ CREATE TABLE IF NOT EXISTS `companies` (
   `Address` char(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Adres - ulica, numer',
   `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
   PRIMARY KEY (`Id`),
-  UNIQUE KEY (`CityId`, `CompanyId`, `Address`),
+  UNIQUE KEY `CityId` (`CityId`,`CompanyId`,`Address`),
+  KEY `Company` (`CompanyId`),
   CONSTRAINT `City` FOREIGN KEY (`CityId`) REFERENCES `cities_list` (`Id`),
   CONSTRAINT `Company` FOREIGN KEY (`CompanyId`) REFERENCES `company_name_list` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.companies: ~2 rows (około)
-DELETE FROM `companies`;
+-- Zrzucanie danych dla tabeli projekt.companies: ~10 rows (około)
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` (`Id`, `CityId`, `CompanyId`, `Address`, `Comment`) VALUES
-	(1, 1, 1, 'holiłud', ''),
-	(2, 2, 1, 'bicz', '');
+REPLACE INTO `companies` (`Id`, `CityId`, `CompanyId`, `Address`, `Comment`) VALUES
+	(1, 1, 1, 'Pszczyńska 44', ''),
+	(2, 2, 2, 'Daleka 6', ''),
+	(3, 3, 3, 'Żniwna 5', ''),
+	(4, 4, 3, 'Wolności 232', ''),
+	(5, 1, 3, 'Chorzowska 1', ''),
+	(6, 6, 6, 'DTŚ 4', ''),
+	(7, 1, 5, 'Dąbrowskiego 2', ''),
+	(8, 1, 7, 'DK 88', ''),
+	(9, 7, 7, 'Chorzowska 88', ''),
+	(10, 8, 8, 'Łódzka 24', '');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 
 
@@ -86,13 +138,19 @@ CREATE TABLE IF NOT EXISTS `company_name_list` (
   `Company` char(50) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nazwa firmy',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Company name` (`Company`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.company_name_list: ~1 rows (około)
-DELETE FROM `company_name_list`;
+-- Zrzucanie danych dla tabeli projekt.company_name_list: ~8 rows (około)
 /*!40000 ALTER TABLE `company_name_list` DISABLE KEYS */;
-INSERT INTO `company_name_list` (`Id`, `Company`) VALUES
-	(1, 'snoop dogg');
+REPLACE INTO `company_name_list` (`Id`, `Company`) VALUES
+	(3, 'Biedronka'),
+	(5, 'Carefur'),
+	(1, 'Cpn'),
+	(8, 'Masarnia'),
+	(7, 'Opel'),
+	(6, 'Orlen'),
+	(2, 'Petrochemia'),
+	(4, 'Ruda Śląska');
 /*!40000 ALTER TABLE `company_name_list` ENABLE KEYS */;
 
 
@@ -122,29 +180,19 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   `Busy` enum('True','False') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'False' COMMENT 'Czy w trasie',
   `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.drivers: ~17 rows (około)
-DELETE FROM `drivers`;
+-- Zrzucanie danych dla tabeli projekt.drivers: ~8 rows (około)
 /*!40000 ALTER TABLE `drivers` DISABLE KEYS */;
-INSERT INTO `drivers` (`Id`, `Name`, `Surname`, `Wage`, `ADR_License`, `Employed`, `Busy`, `Comment`) VALUES
-	(1, 'Jan', 'Ja', 12345, 'True', 'True', 'False', 'sample text sample text \r\n\r\nsample text sample text sample text sample text '),
-	(2, 'jasoi', 'qwertyza', 999, 'True', 'True', 'True', ''),
-	(3, 'kierowca', '4', 1000, 'True', 'False', 'True', ''),
-	(4, 'kierowca', '4', 1000, 'True', 'False', 'True', ''),
-	(5, 'kierowca', '5', 1001, 'True', 'True', 'True', ''),
-	(6, 'test numer 6', 'test', 1, 'False', 'True', 'False', ''),
-	(8, 'test numer 8', 'test2', 1500, 'True', 'True', 'False', ''),
-	(9, 'test', 'test2', 1500, 'True', 'True', 'False', ''),
-	(10, 'test 10', 'test2', 1500, 'True', 'True', 'False', ''),
-	(11, 'test', 'test2', 1500, 'True', 'True', 'False', ''),
-	(12, 'test 12 a', 'test2', 1500, 'True', 'True', 'False', ''),
-	(13, 'abcd', 'def', 3334, 'False', 'False', 'False', ''),
-	(14, '1234567890123456789012345678901234567890', '1234567890123456789012345678901234567890', 1, 'False', 'False', 'True', ''),
-	(15, '1234567890123456789012345678901234567890', '1234567890123456789012345678901234567890', 2, 'False', 'True', 'False', ''),
-	(16, '1234567890123456789012345678901234567890', '1234567890123456789012345678901234567890', 1, 'False', 'True', 'False', ''),
-	(17, 'sample', 'texte', 2, 'True', 'True', 'False', ''),
-	(18, 'test', 'dwa', 0, 'True', 'True', 'True', '');
+REPLACE INTO `drivers` (`Id`, `Name`, `Surname`, `Wage`, `ADR_License`, `Employed`, `Busy`, `Comment`) VALUES
+	(1, 'Mietek', 'Wiśniewski', 2500, 'False', 'True', 'True', ''),
+	(2, 'Mirek', 'Wiśniewski', 2500, 'False', 'True', 'True', ''),
+	(3, 'Tytus', 'Bomba', 7800, 'True', 'True', 'True', ''),
+	(4, 'Mariusz', 'Admirał', 5600, 'True', 'True', 'True', ''),
+	(5, 'Staszek', 'Bąk', 5600, 'True', 'True', 'True', ''),
+	(6, 'Wacław', 'Głuś', 2000, 'False', 'True', 'False', ''),
+	(7, 'Bogusław', 'Lee', 4000, 'False', 'True', 'False', ''),
+	(8, 'Bogusław', 'Mocarz', 4000, 'False', 'True', 'False', '');
 /*!40000 ALTER TABLE `drivers` ENABLE KEYS */;
 
 
@@ -165,49 +213,19 @@ CREATE TABLE IF NOT EXISTS `freights` (
   CONSTRAINT `CityFrom` FOREIGN KEY (`From`) REFERENCES `companies` (`Id`),
   CONSTRAINT `CityTo` FOREIGN KEY (`To`) REFERENCES `companies` (`Id`),
   CONSTRAINT `Freight` FOREIGN KEY (`CargoId`) REFERENCES `cargo` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.freights: ~1 rows (około)
-DELETE FROM `freights`;
+-- Zrzucanie danych dla tabeli projekt.freights: ~7 rows (około)
 /*!40000 ALTER TABLE `freights` DISABLE KEYS */;
-INSERT INTO `freights` (`Id`, `CargoId`, `From`, `To`, `ScheduledArrive`, `Amount`, `Weight`, `Comment`) VALUES
-	(1, 1, 1, 2, '2015-07-08 14:52:13', 254, 1, '');
+REPLACE INTO `freights` (`Id`, `CargoId`, `From`, `To`, `ScheduledArrive`, `Amount`, `Weight`, `Comment`) VALUES
+	(1, 7, 2, 6, '2015-09-16 06:00:00', 0, 38000, ''),
+	(2, 7, 2, 1, '2015-09-16 06:00:00', 0, 38000, ''),
+	(3, 10, 8, 9, '2015-09-16 09:00:00', 3, 38000, ''),
+	(4, 11, 10, 7, '2015-09-13 05:00:00', 1, 38000, ''),
+	(5, 11, 10, 3, '2015-09-13 02:00:00', 5, 38000, ''),
+	(6, 4, 7, 5, '2015-09-15 06:30:00', 0, 2000, ''),
+	(7, 8, 3, 10, '2015-04-01 07:30:00', 0, 11000, '');
 /*!40000 ALTER TABLE `freights` ENABLE KEYS */;
-
-
--- Zrzut struktury tabela projekt.cargo
-CREATE TABLE IF NOT EXISTS `cargo` (
-  `Id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Id',
-  `Name` char(30) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nazwa ładunku',
-  `Type` enum('Container','Dump','Flatbed','Lowboy','Refrigerated','Tank') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Container' COMMENT 'Rodzaj ładunku, kolejno: kontener, wywrotka, platforma, laweta, chłodnia, cysterna',
-  `ADR` enum('True','False') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'False' COMMENT 'Potrzebna licencja ADR',
-  `ADR_Class` set('1','2','3','4.1','4.2','4.3','5.1','5.2','6.1','6.2','7','8','9') COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Typy ADR',
-  `Comment` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Komentarz',
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Zrzucanie danych dla tabeli projekt.cargo: ~8 rows (około)
-DELETE FROM `cargo`;
-/*!40000 ALTER TABLE `cargo` DISABLE KEYS */;
-INSERT INTO `cargo` (`Id`, `Name`, `Type`, `ADR`, `ADR_Class`, `Comment`) VALUES
-	(1, 'weed', 'Tank', 'True', '4.1', 'marihunanen w szczykawkach'),
-	(2, 'nazwa', 'Lowboy', 'True', '2,4.2,4.3', ''),
-	(3, 'dziwne rzeczy', 'Dump', 'True', '2,9', 'hava nagila'),
-	(4, 'mleko', 'Refrigerated', 'False', '', 'hava nagila'),
-	(5, 'dzem', 'Flatbed', 'False', '', ''),
-	(6, 'aló€esczz', 'Dump', 'False', '', ''),
-	(7, 'ę?óąśłżźć', 'Lowboy', 'True', '2,4.2,4.3', ''),
-	(8, 'ę€óąśłżźćń', 'Dump', 'True', '2', 'wywrotka wypełniona niebezpiecznym O2');
-/*!40000 ALTER TABLE `cargo` ENABLE KEYS */;
-
-
--- Zrzut struktury widok projekt.hired_drivers
--- Tworzenie tymczasowej tabeli aby przezwyciężyć błędy z zależnościami w WIDOKU
-CREATE TABLE `hired_drivers` (
-	`name` CHAR(40) NOT NULL COMMENT 'Imię' COLLATE 'utf8_unicode_ci',
-	`surname` CHAR(40) NOT NULL COMMENT 'Nazwisko' COLLATE 'utf8_unicode_ci',
-	`adr_license` ENUM('True','False') NOT NULL COMMENT 'Posiada licencje na ładunki niebezpieczne' COLLATE 'utf8_unicode_ci'
-) ENGINE=MyISAM;
 
 
 -- Zrzut struktury tabela projekt.shipping
@@ -227,21 +245,17 @@ CREATE TABLE IF NOT EXISTS `shipping` (
   CONSTRAINT `Car` FOREIGN KEY (`CarId`) REFERENCES `cars` (`Id`),
   CONSTRAINT `Driver` FOREIGN KEY (`DriverId`) REFERENCES `drivers` (`Id`),
   CONSTRAINT `Freigth` FOREIGN KEY (`FreightId`) REFERENCES `freights` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Zrzucanie danych dla tabeli projekt.shipping: ~9 rows (około)
-DELETE FROM `shipping`;
+-- Zrzucanie danych dla tabeli projekt.shipping: ~6 rows (około)
 /*!40000 ALTER TABLE `shipping` DISABLE KEYS */;
-INSERT INTO `shipping` (`Id`, `DriverId`, `CarId`, `FreightId`, `DepartTime`, `ArriveTime`, `Delivered`, `Comment`) VALUES
-	(1, 1, 1, 1, '2015-07-06 18:10:13', '2015-07-07 11:08:35', 'On time', ''),
-	(3, 16, 6, 1, '2015-07-07 09:12:43', '2015-07-07 11:09:36', 'On time', ''),
-	(5, 15, 4, 1, '2015-07-07 09:20:55', '2015-07-06 14:10:40', 'On time', ''),
-	(6, 15, 5, 1, '2015-07-07 11:20:54', '2015-07-07 11:31:44', 'On time', ''),
-	(7, 14, 2, 1, '2015-07-07 11:22:00', '2015-07-09 11:49:00', 'Delayed', ''),
-	(8, 14, 5, 1, '2015-07-08 14:49:12', '2015-07-08 12:20:02', 'Delayed', ''),
-	(9, 8, 1, 1, '2015-07-08 14:58:30', '2015-07-08 15:01:57', 'On time', ''),
-	(10, 6, 5, 1, '2015-07-08 15:00:25', '2015-07-08 15:01:49', 'On time', ''),
-	(11, 14, 4, 1, '2015-07-08 15:07:28', NULL, 'Not yet', '');
+REPLACE INTO `shipping` (`Id`, `DriverId`, `CarId`, `FreightId`, `DepartTime`, `ArriveTime`, `Delivered`, `Comment`) VALUES
+	(1, 3, 1, 1, '2015-09-15 19:08:06', NULL, 'Not yet', ''),
+	(2, 5, 6, 2, '2015-09-15 19:08:35', NULL, 'Not yet', ''),
+	(3, 4, 13, 7, '2015-09-15 19:08:53', NULL, 'Not yet', ''),
+	(4, 2, 5, 3, '2015-09-15 19:09:03', NULL, 'Not yet', ''),
+	(5, 1, 7, 3, '2015-09-15 19:09:12', NULL, 'Not yet', ''),
+	(6, 7, 10, 6, '2015-09-15 19:09:23', '2015-09-15 19:09:34', 'Delayed', '');
 /*!40000 ALTER TABLE `shipping` ENABLE KEYS */;
 
 
@@ -259,11 +273,11 @@ SET SQL_MODE=@OLDTMP_SQL_MODE;
 
 
 -- Zrzut struktury wyzwalacz projekt.shipping_before_update
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
 DELIMITER //
 CREATE TRIGGER `shipping_before_update` BEFORE UPDATE ON `shipping` FOR EACH ROW begin
 declare scheduledtime datetime;
-set scheduledtime = (select scheduledarrive from freights where freights.Id = id);
+set scheduledtime = (select scheduledarrive from freights where freights.Id = new.FreightId);
 
 	if timestampdiff(minute,scheduledtime,new.arrivetime) < 15 then
 		Update drivers set `busy` = 'false' where drivers.Id = old.DriverId;
@@ -285,13 +299,6 @@ set scheduledtime = (select scheduledarrive from freights where freights.Id = id
 end//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
-
-
--- Zrzut struktury widok projekt.hired_drivers
--- Usuwanie tabeli tymczasowej i tworzenie ostatecznej struktury WIDOKU
-DROP TABLE IF EXISTS `hired_drivers`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `hired_drivers` AS select name,surname,adr_license from drivers
-where employed = 'true' ;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
