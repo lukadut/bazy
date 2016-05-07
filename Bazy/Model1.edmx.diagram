@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8414e55dc3c442a7a95580245f24c4cd" Name="Diagram1">
+        <EntityTypeShape EntityType="projektModel.cargo" Width="1.5" PointX="0.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="projektModel.cars" Width="1.5" PointX="12.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="projektModel.cities_list" Width="1.5" PointX="0.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="projektModel.companies" Width="1.5" PointX="2.625" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="projektModel.companyNameList" Width="1.5" PointX="0.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="projektModel.drivers" Width="1.5" PointX="12.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="projektModel.freights" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="projektModel.shipping" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="projektModel.Freight" ManuallyRouted="false" />
+        <AssociationConnector Association="projektModel.Car" ManuallyRouted="false" />
+        <AssociationConnector Association="projektModel.City" ManuallyRouted="false" />
+        <AssociationConnector Association="projektModel.CityFrom" ManuallyRouted="false" />
+        <AssociationConnector Association="projektModel.CityTo" ManuallyRouted="false" />
+        <AssociationConnector Association="projektModel.Company" ManuallyRouted="false" />
+        <AssociationConnector Association="projektModel.Driver" ManuallyRouted="false" />
+        <AssociationConnector Association="projektModel.Freigth" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
