@@ -161,31 +161,58 @@ namespace LinqExamples
 
             #endregion
             #region Wypisz miasta, w których mówi się po angielsku i formą rządów jest monarchia konstytucyjna sortując po populacji miast
-            var query = (from miasto in swiat.city
-                         join kraj in swiat.country on miasto.CountryCode equals kraj.Code
-                         join jezyk in swiat.countrylanguage on miasto.CountryCode equals jezyk.CountryCode
-                         where jezyk.Language == "english" && kraj.GovernmentForm == "Constitutional Monarchy"
-                         orderby miasto.Population descending
-                         select new
-                         {
-                             City = miasto,
-                             Country = kraj,
-                             Language = jezyk
-                         }).GroupBy(c => c.City.CountryCode);
-                        ;
+            //var query = (from miasto in swiat.city
+            //             join kraj in swiat.country on miasto.CountryCode equals kraj.Code
+            //             join jezyk in swiat.countrylanguage on miasto.CountryCode equals jezyk.CountryCode
+            //             where jezyk.Language == "english" && kraj.GovernmentForm == "Constitutional Monarchy"
+            //             orderby miasto.Population descending
+            //             select new
+            //             {
+            //                 City = miasto,
+            //                 Country = kraj,
+            //                 Language = jezyk
+            //             }).GroupBy(c => c.City.CountryCode);
+            //            ;
 
+            //int i = 1;
+            //foreach (var row in query)
+            //{
+            //    Console.WriteLine(i + " " + row.Key);
+            //    //Console.WriteLine(i + " " + row.Country.Code + " " + row.City.Name + " " + row.City.Population + " " + row.Language.Language + " " + row.Country.GovernmentForm);
+            //    i++;
+            //}
+
+            //// select * from city, countrylanguage, country 
+            //// where city.CountryCode = countrylanguage.CountryCode && countrylanguage.`Language` = "english" 
+            ////    && countrylanguage.CountryCode = country.Code && country.GovernmentForm = "Constitutional Monarchy" 
+            ////    order by city.Population desc
+            #endregion
+
+            #region Wypisać kraj z każdego kontynentu, który ma najwięcej miast
+            var query = from k in swiat.country
+                        join subquery in
+                            (from c in swiat.city
+                             group c by c.CountryCode into g
+                             select new
+                             {
+                                 countryCode = g.Key,
+                                 number = g.Count()
+                             }) on k.Code equals subquery.countryCode
+                        group new { k, subquery } by k.Continent into con
+                        select new
+                        {
+                            kontynent = con.Key,
+                            liczba = con.Max(x => x.subquery.number),
+                            kraj = con.Where(x => x.subquery.number == con.Max(y => y.subquery.number) && x.k.Continent == con.Key)
+                                    .Select(x => x.k.Name)
+                                    .FirstOrDefault()
+                        };
             int i = 1;
             foreach (var row in query)
             {
-                Console.WriteLine(i + " " + row.Key);
-                //Console.WriteLine(i + " " + row.Country.Code + " " + row.City.Name + " " + row.City.Population + " " + row.Language.Language + " " + row.Country.GovernmentForm);
+                Console.WriteLine(i + " " + row.kontynent + " " + row.liczba + " " + row.kraj);
                 i++;
             }
-
-            // select * from city, countrylanguage, country 
-            // where city.CountryCode = countrylanguage.CountryCode && countrylanguage.`Language` = "english" 
-            //    && countrylanguage.CountryCode = country.Code && country.GovernmentForm = "Constitutional Monarchy" 
-            //    order by city.Population desc
             #endregion
 
 
